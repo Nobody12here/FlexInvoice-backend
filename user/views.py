@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import AllowAny
+from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from .models import User
 from .serializer import UserSerializer
@@ -25,4 +26,38 @@ class RegisterView(APIView):
 
         return Response(
             {"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST
+        )
+
+
+class LoginView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Email Field"
+                ),
+                "password": openapi.Schema(
+                    type=openapi.TYPE_STRING, description="Password"
+                ),
+            },
+            required=["email", "password"],
+        )
+    )
+    def post(self, request):
+        email = request.data.get("email")
+        password = request.data.get("password")
+        try:
+            user = User.objects.get(email=email)
+            if user.check_password(password):
+                return Response(
+                    {"message": "Login sucessfully!"}, status=status.HTTP_200_OK
+                )
+        except User.DoesNotExist:
+            pass
+        return Response(
+            {
+                "error": "Incorrect email or password try again!",
+            },
+            status=status.HTTP_401_UNAUTHORIZED,
         )
