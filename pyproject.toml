@@ -1,0 +1,13 @@
+[project]
+name = "flexinvoice-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django-cors-headers>=4.7.0",
+    "djangorestframework>=3.16.0",
+    "djangorestframework-simplejwt>=5.5.0",
+    "drf-yasg>=1.21.10",
+    "rest-framework-simplejwt>=0.0.2",
+]

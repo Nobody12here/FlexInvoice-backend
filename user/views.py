@@ -50,6 +50,7 @@ class LoginView(APIView):
         try:
             user = User.objects.get(email=email)
             if user.check_password(password):
+                # generate jwt token for this user
                 return Response(
                     {"message": "Login sucessfully!"}, status=status.HTTP_200_OK
                 )
