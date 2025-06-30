@@ -8,6 +8,7 @@ from .models import User
 from .serializer import UserSerializer
 from common.utils import CommonUtils
 
+
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -53,7 +54,8 @@ class LoginView(APIView):
                 # generate jwt token for this user
                 access_tokens = CommonUtils().create_access(user)
                 return Response(
-                    {"message": "Login sucessfully!","data":access_tokens}, status=status.HTTP_200_OK
+                    {"message": "Login sucessfully!", "data": access_tokens},
+                    status=status.HTTP_200_OK,
                 )
         except User.DoesNotExist:
             pass

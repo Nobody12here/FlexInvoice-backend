@@ -1,5 +1,5 @@
 from django.contrib import admin
-from user.models import User
+from .models import Invoice
 
 # Register your models here.
-admin.site.register(User)
+admin.site.register(Invoice)
